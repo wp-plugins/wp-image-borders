@@ -50,8 +50,20 @@ function wp_image_borders_options() {
             <?php do_settings_sections( 'wp-image-borders' ); ?>
             <input class="button-primary" name="Submit" type="submit" value="<?php esc_attr_e( 'Save Changes' ); ?>" />
         </form>
+        <p>If you liked this plugin, please take <a href="http://wordpress.org/support/view/plugin-reviews/wp-image-borders">1 minute to leave a review</a>.</p>
     </div><?php 
 }
+
+// Add settings link on plugin page
+function bs_wib_settings_link($links) { 
+  $settings_link = '<a href="options-general.php?page=wp-image-borders.php">Settings</a>'; 
+  array_unshift($links, $settings_link); 
+  return $links; 
+}
+ 
+$plugin = plugin_basename(__FILE__); 
+add_filter("plugin_action_links_$plugin", 'bs_wib_settings_link' );
+
 // hook into the admin initialization
 add_action( 'admin_init', 'bs_wib_admin_init');
 
@@ -277,7 +289,12 @@ function bs_wib_remove_borders() {
     if ( 1 == $options['bs_wib_checkbox'] ) { 
         // adds style to header to remove borders
         echo '<style type="text/css" media="screen">.wib-img img { 
-           border: none !important; } </style>';
+           border: none !important; 
+           border-radius: 0px !important; 
+           -moz-box-shadow: 0 0 0 0 #fff !important; 
+           -webkit-box-shadow: 0 0 0 0 #fff !important; 
+           box-shadow: 0 0 0 0 #fff !important;
+           } </style>';
     } else {
         echo '<style type="text/css" media="screen">.wib-img img { 
            border-style: ' . $options["bs_wib_border_style"] . '; 
