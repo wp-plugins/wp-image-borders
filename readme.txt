@@ -75,6 +75,9 @@ Border radius is the level of curvature of the image's border.  A higher border 
 
 == Upgrade Notice ==
 
+= 1.2 = 
+* Added Support Dash for easy customer support access
+
 = 1.1 = 
 * Fixed bug that left drop shadows on images
 
