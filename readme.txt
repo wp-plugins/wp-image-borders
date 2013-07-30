@@ -3,7 +3,7 @@ Contributors: BenSibley
 Tags: posts, post, images, image, blog, photo, photos, picture, pictures, remove image borders, add image borders, change image border styles
 Requires at least: 3.0.1
 Tested up to: 3.5.2
-Stable tag: 1.1
+Stable tag: 1.2
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,10 @@ Border radius is the level of curvature of the image's border.  A higher border 
 2. This is an example of an image modified with WP Image Borders.  It's been given a white border and box shadow.
 
 == Changelog ==
+
+= 1.2 =
+
+* Added [Support Dash] (http://www.supportdash.com "Support Dash")
 
 = 1.1 =
 * Fixed bug with drop shadows still appearing

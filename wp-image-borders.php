@@ -25,6 +25,9 @@ License: GPLv2
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+require_once('supportdash.php');
+new SupportDash("WP Image Borders", "0", "51f70736aa001e0200000001");
+
 // Hook into admin_menu to build my submenu
 add_action('admin_menu', 'bs_wib_add_page');
 
