@@ -3,7 +3,7 @@ Contributors: BenSibley
 Tags: posts, post, images, image, blog, photo, photos, picture, pictures, remove image borders, add image borders, change image border styles
 Requires at least: 3.0.1
 Tested up to: 3.5.2
-Stable tag: 1.3
+Stable tag: 1.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,6 +57,9 @@ Border radius is the level of curvature of the image's border.  A higher border 
 
 == Changelog ==
 
+= 1.4 =
+* Fixed potential error with multisite installs
+
 = 1.3 =
 * Fixed bug where gray line would appear - certain unset fields now default to zero
 
@@ -76,6 +79,9 @@ Border radius is the level of curvature of the image's border.  A higher border 
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.4 =
+* fixed potential issue with multisite installs
 
 =1.2=
 * fixed gray lines bug
