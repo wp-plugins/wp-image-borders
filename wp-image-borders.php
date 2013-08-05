@@ -220,6 +220,9 @@ function bs_wib_border_style_display() {
 // adds the border width option
 function bs_wib_border_width_display() {
     $options = get_option( 'wp_image_borders_options' );
+    if ( empty($options['bs_wib_border_width']) ) {
+        $options['bs_wib_border_width'] = 0; 
+    }
     $html = "<input type='number' id='bs_wib_border_width' min='0' name='wp_image_borders_options[bs_wib_border_width]' value='{$options['bs_wib_border_width']}' />";  
     echo $html;
 }
@@ -227,6 +230,9 @@ function bs_wib_border_width_display() {
 // adds the border radius option
 function bs_wib_border_radius_display() {
     $options = get_option( 'wp_image_borders_options' );
+    if ( empty($options['bs_wib_border_radius']) ) {
+        $options['bs_wib_border_radius'] = 0; 
+    }
     $html = "<input type='number' min='0' id='bs_wib_border_radius' name='wp_image_borders_options[bs_wib_border_radius]' value='{$options['bs_wib_border_radius']}' />";  
     echo $html;
 }
@@ -249,28 +255,40 @@ function bs_wib_border_color_display() {
 // Adds the horizontal box shadow field
 function bs_wib_box_shadow_horizontal_display() {
     $options = get_option( 'wp_image_borders_options' );
-    $html ="<input type='number' id='bs_wib_box_shadow_horizontal' name='wp_image_borders_options[bs_wib_box_shadow_horizontal]' value='{$options['bs_wib_box_shadow_horizontal']}' />";
+    if ( empty($options['bs_wib_box_shadow_horizontal']) ) {
+        $options['bs_wib_box_shadow_horizontal'] = 0; 
+    }
+    $html ="<input type='number' default='0' id='bs_wib_box_shadow_horizontal' name='wp_image_borders_options[bs_wib_box_shadow_horizontal]' value='{$options['bs_wib_box_shadow_horizontal']}' />";
     echo $html;
 }
 
 // Adds the vertical box shadow field
 function bs_wib_box_shadow_vertical_display() {
     $options = get_option( 'wp_image_borders_options' );
-    $html ="<input type='number' id='bs_wib_box_shadow_vertical' name='wp_image_borders_options[bs_wib_box_shadow_vertical]' value='{$options['bs_wib_box_shadow_vertical']}' />";
+    if ( empty($options['bs_wib_box_shadow_vertical']) ) {
+        $options['bs_wib_box_shadow_vertical'] = 0; 
+    }
+    $html ="<input type='number' default='0' id='bs_wib_box_shadow_vertical' name='wp_image_borders_options[bs_wib_box_shadow_vertical]' value='{$options['bs_wib_box_shadow_vertical']}' />";
     echo $html;
 }
 
 // Adds the blur box shadow field
 function bs_wib_box_shadow_blur_display() {
     $options = get_option( 'wp_image_borders_options' );
-    $html ="<input type='number' min='0' id='bs_wib_box_shadow_blur' name='wp_image_borders_options[bs_wib_box_shadow_blur]' value='{$options['bs_wib_box_shadow_blur']}' />";
+    if ( empty($options['bs_wib_box_shadow_blur']) ) {
+        $options['bs_wib_box_shadow_blur'] = 0; 
+    }
+    $html ="<input type='number' default='0' min='0' id='bs_wib_box_shadow_blur' name='wp_image_borders_options[bs_wib_box_shadow_blur]' value='{$options['bs_wib_box_shadow_blur']}' />";
     echo $html;
 }
 
 // Adds the spread box shadow field
 function bs_wib_box_shadow_spread_display() {
     $options = get_option( 'wp_image_borders_options' );
-    $html ="<input type='number' min='0' id='bs_wib_box_shadow_spread' name='wp_image_borders_options[bs_wib_box_shadow_spread]' value='{$options['bs_wib_box_shadow_spread']}' />";
+    if ( empty($options['bs_wib_box_shadow_spread']) ) {
+        $options['bs_wib_box_shadow_spread'] = 0; 
+    }
+    $html ="<input type='number' default='0' min='0' id='bs_wib_box_shadow_spread' name='wp_image_borders_options[bs_wib_box_shadow_spread]' value='{$options['bs_wib_box_shadow_spread']}' />";
     echo $html;
 }
 

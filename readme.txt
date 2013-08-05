@@ -58,8 +58,7 @@ Border radius is the level of curvature of the image's border.  A higher border 
 == Changelog ==
 
 = 1.2 =
-
-* Added [Support Dash](http://www.supportdash.com)
+* Fixed bug where gray line would appear - certain unset fields now default to zero
 
 = 1.1 =
 * Fixed bug with drop shadows still appearing
@@ -75,8 +74,8 @@ Border radius is the level of curvature of the image's border.  A higher border 
 
 == Upgrade Notice ==
 
-= 1.2 = 
-* Added Support Dash for easy customer support access
+=1.2=
+* fixed gray lines bug
 
 = 1.1 = 
 * Fixed bug that left drop shadows on images
