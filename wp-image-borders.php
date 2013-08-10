@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Image Borders
 Description: WP Image Borders makes it easy to add or remove image borders from pictures in your blog posts. 
-Version: 1.4
+Version: 1.4.1
 Author: Ben Sibley
 Author URI: http://profiles.wordpress.org/bensibley
 License: GPLv2
@@ -321,13 +321,13 @@ function bs_wib_remove_borders() {
            } </style>';
     } else {
         echo '<style type="text/css" media="screen">.wib-img img { 
-           border-style: ' . $options["bs_wib_border_style"] . '; 
-           border-width: ' . $options["bs_wib_border_width"] . 'px ; 
-           border-radius: ' . $options["bs_wib_border_radius"] . 'px ;
-           border-color: ' . $options["bs_wib_border_color"] . '; 
-           -moz-box-shadow: ' . $options["bs_wib_box_shadow_horizontal"] . 'px ' . $options["bs_wib_box_shadow_vertical"] . 'px ' . $options["bs_wib_box_shadow_blur"] . 'px ' . $options["bs_wib_box_shadow_spread"] . 'px ' . $options["bs_wib_box_shadow_color"] . '; 
-           -webkit-box-shadow: ' . $options["bs_wib_box_shadow_horizontal"] . 'px ' . $options["bs_wib_box_shadow_vertical"] . 'px ' . $options["bs_wib_box_shadow_blur"] . 'px ' . $options["bs_wib_box_shadow_spread"] . 'px ' . $options["bs_wib_box_shadow_color"] . '; 
-           box-shadow: ' . $options["bs_wib_box_shadow_horizontal"] . 'px ' . $options["bs_wib_box_shadow_vertical"] . 'px ' . $options["bs_wib_box_shadow_blur"] . 'px ' . $options["bs_wib_box_shadow_spread"] . 'px ' . $options["bs_wib_box_shadow_color"] . '; 
+           border-style: ' . $options["bs_wib_border_style"] . ' !important; 
+           border-width: ' . $options["bs_wib_border_width"] . 'px !important; 
+           border-radius: ' . $options["bs_wib_border_radius"] . 'px !important;
+           border-color: ' . $options["bs_wib_border_color"] . ' !important; 
+           -moz-box-shadow: ' . $options["bs_wib_box_shadow_horizontal"] . 'px ' . $options["bs_wib_box_shadow_vertical"] . 'px ' . $options["bs_wib_box_shadow_blur"] . 'px ' . $options["bs_wib_box_shadow_spread"] . 'px ' . $options["bs_wib_box_shadow_color"] . ' !important; 
+           -webkit-box-shadow: ' . $options["bs_wib_box_shadow_horizontal"] . 'px ' . $options["bs_wib_box_shadow_vertical"] . 'px ' . $options["bs_wib_box_shadow_blur"] . 'px ' . $options["bs_wib_box_shadow_spread"] . 'px ' . $options["bs_wib_box_shadow_color"] . ' !important; 
+           box-shadow: ' . $options["bs_wib_box_shadow_horizontal"] . 'px ' . $options["bs_wib_box_shadow_vertical"] . 'px ' . $options["bs_wib_box_shadow_blur"] . 'px ' . $options["bs_wib_box_shadow_spread"] . 'px ' . $options["bs_wib_box_shadow_color"] . ' !important; 
            } </style>';
     }
 }
