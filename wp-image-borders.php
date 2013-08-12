@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Image Borders
 Description: WP Image Borders makes it easy to add or remove image borders from pictures in your blog posts. 
-Version: 1.4.2
+Version: 1.4.3
 Author: Ben Sibley
 Author URI: http://profiles.wordpress.org/bensibley
 License: GPLv2
@@ -312,7 +312,7 @@ function bs_wib_remove_borders() {
     $options = get_option( 'wp_image_borders_options' );
     if ( 1 == $options['bs_wib_checkbox'] ) { 
         // adds style to header to remove borders
-        echo '<style type="text/css" media="screen">.wib-img p img { 
+        echo '<style type="text/css" media="screen">.wib-img img { 
            border: none !important; 
            border-radius: 0px !important; 
            -moz-box-shadow: 0 0 0 0 #fff !important; 
@@ -320,7 +320,7 @@ function bs_wib_remove_borders() {
            box-shadow: 0 0 0 0 #fff !important;
            } </style>';
     } else {
-        echo '<style type="text/css" media="screen">.wib-img p img { 
+        echo '<style type="text/css" media="screen">.wib-img img { 
            border-style: ' . $options["bs_wib_border_style"] . ' !important; 
            border-width: ' . $options["bs_wib_border_width"] . 'px !important; 
            border-radius: ' . $options["bs_wib_border_radius"] . 'px !important;
@@ -333,7 +333,7 @@ function bs_wib_remove_borders() {
 }
 
 // Applies filter to add 'wib-img' class to all pages
-        add_filter('body_class', 'bs_wib_class');
+        add_filter('post_class', 'bs_wib_class');
         // creates 'wib-img' class
         function bs_wib_class($classes) {
         $classes[] = 'wib-img';
