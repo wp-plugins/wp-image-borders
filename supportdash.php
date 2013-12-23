@@ -34,7 +34,7 @@ if (class_exists('SupportDash') == False) {
 
             $this->url = $this->url . '/' . $this->pluginVersion;
 
-            add_action('admin_init', array($this, 'init'));
+            add_action('admin_enqueue_scripts', array($this, 'init'));
         }
 
         function init () {
