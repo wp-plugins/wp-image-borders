@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Image Borders
 Description: WP Image Borders makes it easy to add or remove image borders from pictures in your blog posts. 
-Version: 1.4.3
+Version: 1.4.4
 Author: Ben Sibley
 Author URI: http://profiles.wordpress.org/bensibley
 License: GPLv2
@@ -26,8 +26,8 @@ License: GPLv2
 */
 
 function supportDashInit () {
-    require_once('supportdash.php');
-    new SupportDash("WP Image Borders", "0", "51f70736aa001e0200000001");
+	require_once( plugin_dir_path(__FILE__) . 'supportdash.php');
+	new SupportDash("WP Image Borders", "0", "51f70736aa001e0200000001");
 }
 add_action('init', 'supportDashInit');
 
@@ -56,6 +56,8 @@ function wp_image_borders_options() {
             <?php do_settings_sections( 'wp-image-borders' ); ?>
             <input class="button-primary" name="Submit" type="submit" value="<?php esc_attr_e( 'Save Changes' ); ?>" />
         </form>
+        <!-- support dash link -->
+		<a data-sd-link="51f70736aa001e0200000001">Click for Customer Support</a>
         <p>If you liked this plugin, please take <a href="http://wordpress.org/support/view/plugin-reviews/wp-image-borders">1 minute to leave a review</a>.</p>
     </div><?php 
 }
