@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Image Borders
 Description: WP Image Borders makes it easy to add or remove image borders from pictures in your blog posts. 
-Version: 1.5.1
+Version: 1.5.2
 Author: Ben Sibley
 Author URI: http://profiles.wordpress.org/bensibley
 License: GPLv2
@@ -380,6 +380,11 @@ function bs_wib_output_styles() {
     // if there are any selectors available...
 	if($selectors) {
 
+        wp_enqueue_style(
+            'wp-image-borders-styles',
+            plugins_url( 'wp-image-borders.css' , __FILE__ )
+        );
+
         // get the number of selectors available
 		$class_count = count($selectors);
 
@@ -402,7 +407,7 @@ function bs_wib_output_styles() {
 			   box-shadow: ' . $options["bs_wib_box_shadow_horizontal"] . 'px ' . $options["bs_wib_box_shadow_vertical"] . 'px ' . $options["bs_wib_box_shadow_blur"] . 'px ' . $options["bs_wib_box_shadow_spread"] . 'px ' . $options["bs_wib_box_shadow_color"] . ' !important; 
 			   }';
 			   
-    	wp_add_inline_style('style',$css);
+    	wp_add_inline_style('wp-image-borders-styles',$css);
     }
 }
 
