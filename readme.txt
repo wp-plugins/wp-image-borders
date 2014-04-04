@@ -2,35 +2,37 @@
 Contributors: BenSibley
 Tags: posts, post, images, image, blog, photo, photos, picture, pictures, remove image borders, add image borders, change image border styles
 Requires at least: 3.0.1
-Tested up to: 3.5.2
-Stable tag: 1.4.6
+Tested up to: 3.8.1
+Stable tag: 1.5
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-WP Image Borders makes it easy to add or remove image borders from pictures in your blog posts.
+WP Image Borders makes it easy to add decorative image borders to pictures in your blog posts.
 
 == Description ==
 
 WP Image Borders makes it easy to:
 
-* Remove image borders
-* Add borders around images
+* automatically add borders around images in posts
+* selectively add borders around images in any part of your site
 * Change image border styles
 * Change image border colors
 * Change image border width
 * and add shadows to images in your posts
 
-Check off the checkbox labeled 'Remove Image Borders?' at the top of the WP Image Borders settings page, to remove the picture border from all pictures in your blog posts.  Any border styles created with the plugin will not show as long as this box is checked.
+To add borders around images in your posts, simply check the checkbox in the settings titled "Add borders to all images in blog posts." This will automatically add the borders you've created to all images in your blog posts.
 
-To add borders around your images, first make sure that checkbox is no longer checked.  Then you can use the 'Customize Image Borders' section to change the style, width, radius, and color of your borders.  You can also use the 'Add Drop Shadows to Images' options section to add box shadows to your images.
+To add borders around images in specific parts of your site, you can add **a comma-delimited list** of CSS classes of the image containers. You can use this to add borders to images in a certain part of your site, or in addition to adding borders to all images in your blog posts.
 
-In order to remove drop shadows, simply reduce the Horizontal and Vertical Distance to zero.  If you only want drop shadows without any border, just reduce the border with to 0.  Border radius acts independently, so you can use it to round out the corners of your images with or without borders or shadows.
+WP Image Borders comes with the following options for you to style your image borders with:
 
-= Video Tutorial =
+* 8 Border styles (solid, dotted, dashed, double, groove, ridge, inset, outset)
+* Border width (in px)
+* Border radius (in px)
+* Border color (color picker)
+* Drop shadows (distance, blur, spread, and color options)
 
-Watch the video below to see how WP Image Borders works
-
-[youtube http://www.youtube.com/watch?v=5O83lI2ApSE]
+Additionally, you can use this plugin to remove unwanted borders on images by leaving all border style options at their default values.
 
 == Installation ==
 
@@ -57,8 +59,12 @@ Border radius is the level of curvature of the image's border.  A higher border 
 
 == Changelog ==
 
-= 1.4.6 =
-* fixed bug in SD
+= 1.5 =
+* removed Support Dash
+* added a default 'add' instead of default 'remove' checkbox
+* added option to add image borders based on specific CSS classes
+* now correctly enqueueing and adding inline styles
+* updated plugin banner
 
 = 1.4.5 =
 * fixed mistake in uploading 1.4.4

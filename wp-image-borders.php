@@ -8,7 +8,7 @@ Author URI: http://profiles.wordpress.org/bensibley
 License: GPLv2
 */
 
-/* Copyright 2013 Ben Sibley (email: bens233@gmail.com)
+/* Copyright 2013 Ben Sibley (email: ben@competethemes.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,11 +25,15 @@ License: GPLv2
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-function supportDashInit () {
-	require_once( plugin_dir_path(__FILE__) . 'supportdash.php');
-	new SupportDash("WP Image Borders", "0", "51f70736aa001e0200000001");
+// Add settings link on plugin page
+function bs_wib_settings_link($links) { 
+  $settings_link = '<a href="options-general.php?page=wp-image-borders.php">Settings</a>'; 
+  array_unshift($links, $settings_link); 
+  return $links; 
 }
-add_action('init', 'supportDashInit');
+
+$plugin = plugin_basename(__FILE__); 
+add_filter("plugin_action_links_$plugin", 'bs_wib_settings_link' );
 
 // Hook into admin_menu to build my submenu
 add_action('admin_menu', 'bs_wib_add_page');
@@ -57,20 +61,9 @@ function wp_image_borders_options() {
             <input class="button-primary" name="Submit" type="submit" value="<?php esc_attr_e( 'Save Changes' ); ?>" />
         </form>
         <!-- support dash link -->
-		<a data-sd-link="51f70736aa001e0200000001">Click for Customer Support</a>
         <p>If you liked this plugin, please take <a href="http://wordpress.org/support/view/plugin-reviews/wp-image-borders">1 minute to leave a review</a>.</p>
     </div><?php 
 }
-
-// Add settings link on plugin page
-function bs_wib_settings_link($links) { 
-  $settings_link = '<a href="options-general.php?page=wp-image-borders.php">Settings</a>'; 
-  array_unshift($links, $settings_link); 
-  return $links; 
-}
- 
-$plugin = plugin_basename(__FILE__); 
-add_filter("plugin_action_links_$plugin", 'bs_wib_settings_link' );
 
 // hook into the admin initialization
 add_action( 'admin_init', 'bs_wib_admin_init');
@@ -85,7 +78,7 @@ function bs_wib_admin_init() {
     // this section contains remove checkbox
     add_settings_section(
         'bs_wib_main', // string used in 'id' attribute of tags
-        'Remove Image Borders/Shadows', // title of the section
+        'Target Images', // title of the section
         'bs_wib_section_text', // callback that will echo content
         'wp-image-borders' // $page ($menu_slug used in add_options_page)
     );
@@ -103,11 +96,19 @@ function bs_wib_admin_init() {
         'bs_wib_shadow_section_text', // callback that will echo content
         'wp-image-borders' // $page ($menu_slug used in add_options_page)
     );
-    // this field contains the remove checkbox
+    // this field lets users add classes
     add_settings_field(
-        'bs_wib_checkbox', // string used for 'id' in attribute tags
-        'Remove Image Borders?', // Title of the field
-        'bs_wib_checkbox_display', // callback that creates the input field
+        'bs_wib_post_checkbox', // string used for 'id' in attribute tags
+        'Add borders to all images in blog posts', // Title of the field
+        'bs_wib_post_checkbox_display', // callback that creates the input field
+        'wp-image-borders', // $page ($menu_slug used in add_options_page)
+        'bs_wib_main' // the section the field is placed in (the id from add_settings_section above)
+    );
+    // this field lets users add classes
+    add_settings_field(
+        'bs_wib_classes', // string used for 'id' in attribute tags
+        'Add specific CSS classes here', // Title of the field
+        'bs_wib_classes_display', // callback that creates the input field
         'wp-image-borders', // $page ($menu_slug used in add_options_page)
         'bs_wib_main' // the section the field is placed in (the id from add_settings_section above)
     );
@@ -185,23 +186,32 @@ function bs_wib_admin_init() {
 
 // Adds text to remove borders section
 function bs_wib_section_text() {
-    echo '<p></p>';
+    echo '<p>Use this section to target the images you want to add borders to.</p>';
 }
 
 // Adds text to border styles section
 function bs_wib_borders_section_text() {
-    echo '<p>Enter your custom border styles here:</p>';
+    echo '<p>Use this section to style your image borders.</p>';
 }
 
 // Adds text to box shadow section
 function bs_wib_shadow_section_text() {
-    echo '<p>Add drop shadows to your images here (Optional):</p>';
+    echo '<p>Use this section to add drop shadows to your images.</p>';
 }
 
-// adds the checkbox with it set to be already checked
-function bs_wib_checkbox_display() {
+// adds checkbox to add borders to all images in post
+function bs_wib_post_checkbox_display() {
     $options = get_option( 'wp_image_borders_options' );
-    $html = '<input type="checkbox" id="bs_wib_checkbox" name="wp_image_borders_options[bs_wib_checkbox]" value="1"' . checked( 1, $options['bs_wib_checkbox'], false ) . '/>';  
+    if ( empty($options['bs_wib_post_checkbox']) ) {
+        $options['bs_wib_post_checkbox'] = 0;
+    }
+    $html = "<input type='checkbox' id='bs_wib_post_checkbox' name='wp_image_borders_options[bs_wib_post_checkbox]' value='1'" . checked( 1, $options['bs_wib_post_checkbox'], false ) . " />";
+    echo $html;
+}
+// adds text input for entering classes to add borders to
+function bs_wib_classes_display() {
+    $options = get_option( 'wp_image_borders_options' );
+    $html = "<input type='text' id='bs_wib_classes' name='wp_image_borders_options[bs_wib_classes]' value='{$options['bs_wib_classes']}' />";  
     echo $html;
 }
 
@@ -304,43 +314,99 @@ function bs_wib_box_shadow_color_display() {
     echo $html;
 }
 
-// ATTENTION: Validation will need to be added back to register_setting and then defined here
+// get the classes from the optional class input and return them in a comma delimited list with img selectors
+function bs_wib_get_classes() {
 
+    // access the plugin options
+	$options = get_option( 'wp_image_borders_options' );
 
-add_action( 'wp_head', 'bs_wib_remove_borders' );
+    // if the classes section exists
+	if($options['bs_wib_classes']) {
 
-// checks to see if the checkbox to remove borders is checked
-function bs_wib_remove_borders() {
-    $options = get_option( 'wp_image_borders_options' );
-    if ( 1 == $options['bs_wib_checkbox'] ) { 
-        // adds style to header to remove borders
-        echo '<style type="text/css" media="screen">.wib-img img { 
-           border: none !important; 
-           border-radius: 0px !important; 
-           -moz-box-shadow: 0 0 0 0 #fff !important; 
-           -webkit-box-shadow: 0 0 0 0 #fff !important; 
-           box-shadow: 0 0 0 0 #fff !important;
-           } </style>';
-    } else {
-        echo '<style type="text/css" media="screen">.wib-img img { 
-           border-style: ' . $options["bs_wib_border_style"] . ' !important; 
-           border-width: ' . $options["bs_wib_border_width"] . 'px !important; 
-           border-radius: ' . $options["bs_wib_border_radius"] . 'px !important;
-           border-color: ' . $options["bs_wib_border_color"] . ' !important; 
-           -moz-box-shadow: ' . $options["bs_wib_box_shadow_horizontal"] . 'px ' . $options["bs_wib_box_shadow_vertical"] . 'px ' . $options["bs_wib_box_shadow_blur"] . 'px ' . $options["bs_wib_box_shadow_spread"] . 'px ' . $options["bs_wib_box_shadow_color"] . ' !important; 
-           -webkit-box-shadow: ' . $options["bs_wib_box_shadow_horizontal"] . 'px ' . $options["bs_wib_box_shadow_vertical"] . 'px ' . $options["bs_wib_box_shadow_blur"] . 'px ' . $options["bs_wib_box_shadow_spread"] . 'px ' . $options["bs_wib_box_shadow_color"] . ' !important; 
-           box-shadow: ' . $options["bs_wib_box_shadow_horizontal"] . 'px ' . $options["bs_wib_box_shadow_vertical"] . 'px ' . $options["bs_wib_box_shadow_blur"] . 'px ' . $options["bs_wib_box_shadow_spread"] . 'px ' . $options["bs_wib_box_shadow_color"] . ' !important; 
-           } </style>';
+        // create a comma delimited list from the array
+		$classes = explode(",", $options['bs_wib_classes']);
+
+        // if the add to all post images box is checked, add the wp-image-borders class
+        if ( !empty($options['bs_wib_post_checkbox']) ) {
+            if ( 1 == $options['bs_wib_post_checkbox'] ) {
+                $classes[] = " .wp-image-borders";
+            }
+        }
+
+        // there were classes, add an 'img' selector after each
+		if($classes) {
+			foreach($classes as $class) {
+				$selectors[] = "$class img";
+			}
+		}
+		return $selectors;
+	}
+    // if there are not classes, but the checkbox is checked then return just the wp-image-borders selector
+    elseif ( !empty($options['bs_wib_post_checkbox']) ) {
+
+        if(1 == $options['bs_wib_post_checkbox'] ){
+            $selectors[] = ".wp-image-borders img";
+
+            return $selectors;
+        }
     }
 }
 
-// Applies filter to add 'wib-img' class to all pages
-        add_filter('post_class', 'bs_wib_class');
-        // creates 'wib-img' class
-        function bs_wib_class($classes) {
-        $classes[] = 'wib-img';
-        return $classes;
+// add the wp-image-borders class to the post container if the post_checkbox is checked
+function bs_wib_add_post_class($classes) {
+    // access the plugin options
+    $options = get_option( 'wp_image_borders_options' );
+
+    // if the checkbox is not empty and is checked, add the wp-image-borders class
+    if ( !empty($options['bs_wib_post_checkbox']) ) {
+        if ( 1 == $options['bs_wib_post_checkbox'] ) {
+            $classes[] = "wp-image-borders";
         }
+    }
+    return $classes;
+}
+add_filter('post_class', 'bs_wib_add_post_class');
+
+function bs_wib_output_styles() {
+
+    // access plugin options
+    $options = get_option( 'wp_image_borders_options' );
+
+    // get the classes from the function that created a comma delimited list and added 'img' selectors
+	$selectors = bs_wib_get_classes();
+    // create $css variable
+    $css = '';
+
+    // if there are any selectors available...
+	if($selectors) {
+
+        // get the number of selectors available
+		$class_count = count($selectors);
+
+        // output each class with a comma except for the last (no comma)
+		for ( $counter = 0; $counter < $class_count; $counter += 1) {
+			if($class_count > $counter + 1) {
+				$css .= "$selectors[$counter],";
+			} else {
+				$css .= $selectors[$counter];
+			}
+		}
+        // append the user-generated styles to the class selectors
+		$css .= ' { 
+			   border-style: ' . $options["bs_wib_border_style"] . ' !important; 
+			   border-width: ' . $options["bs_wib_border_width"] . 'px !important; 
+			   border-radius: ' . $options["bs_wib_border_radius"] . 'px !important;
+			   border-color: ' . $options["bs_wib_border_color"] . ' !important; 
+			   -moz-box-shadow: ' . $options["bs_wib_box_shadow_horizontal"] . 'px ' . $options["bs_wib_box_shadow_vertical"] . 'px ' . $options["bs_wib_box_shadow_blur"] . 'px ' . $options["bs_wib_box_shadow_spread"] . 'px ' . $options["bs_wib_box_shadow_color"] . ' !important; 
+			   -webkit-box-shadow: ' . $options["bs_wib_box_shadow_horizontal"] . 'px ' . $options["bs_wib_box_shadow_vertical"] . 'px ' . $options["bs_wib_box_shadow_blur"] . 'px ' . $options["bs_wib_box_shadow_spread"] . 'px ' . $options["bs_wib_box_shadow_color"] . ' !important; 
+			   box-shadow: ' . $options["bs_wib_box_shadow_horizontal"] . 'px ' . $options["bs_wib_box_shadow_vertical"] . 'px ' . $options["bs_wib_box_shadow_blur"] . 'px ' . $options["bs_wib_box_shadow_spread"] . 'px ' . $options["bs_wib_box_shadow_color"] . ' !important; 
+			   }';
+			   
+    	wp_add_inline_style('style',$css);
+    }
+}
+
+add_action('wp_enqueue_scripts','bs_wib_output_styles');
 
 // sanitizes the inputs from the options pages and outputs clean data
 // ONLY does one checkbox right now
