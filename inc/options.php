@@ -193,8 +193,8 @@ function bs_wib_border_radius_display() {
 }
 
 // Add the built-in WordPress Iris color picker
-add_action( 'admin_enqueue_scripts', 'mw_enqueue_color_picker' );
-function mw_enqueue_color_picker( $hook_suffix ) {
+add_action( 'admin_enqueue_scripts', 'bs_wib_enqueue_color_picker' );
+function bs_wib_enqueue_color_picker( $hook_suffix ) {
 	// first check that $hook_suffix is appropriate for your admin page
 	wp_enqueue_style( 'wp-color-picker' );
 	wp_enqueue_script( 'color-picker', BS_WIB_PRO_URL . 'js/color-picker.js', array( 'wp-color-picker' ), false, true );
